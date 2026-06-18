@@ -1,0 +1,674 @@
+/* ========== HERO ========== */
+.hero {
+  background: linear-gradient(135deg, #e8f0fe 0%, #d4e4fc 50%, #c5d9f8 100%);
+  position: relative;
+  padding: var(--sp-12) 0 var(--sp-16);
+  overflow: hidden;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 400'%3E%3Cdefs%3E%3Cpattern id='grid' width='50' height='50' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 50 0 L 0 0 0 50' fill='none' stroke='%23b0c8e8' stroke-width='0.5' opacity='0.4'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='1200' height='400' fill='url(%23grid)'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-8);
+}
+
+.hero-trip-type {
+  display: flex;
+  gap: var(--sp-2);
+}
+
+.hero-prices {
+  display: flex;
+  gap: var(--sp-4);
+}
+
+.hero-price-tag {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.7);
+}
+
+.hero-price-tag.smiles {
+  color: #f97316;
+}
+
+.hero-price-tag.livelo {
+  color: var(--primary-500);
+}
+
+/* ========== SEARCH FORM ========== */
+.search-form-container {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: var(--sp-6);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+  margin-top: var(--sp-4);
+}
+
+.search-field {
+  flex: 1;
+  min-width: 160px;
+}
+
+.search-field-label {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: var(--sp-1);
+}
+
+.search-field-input {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  cursor: pointer;
+}
+
+.search-field-input .icon {
+  color: var(--primary-500);
+  font-size: var(--fs-lg);
+}
+
+.search-field-input input {
+  border: none;
+  padding: var(--sp-2) 0;
+  font-size: var(--fs-base);
+  background: transparent;
+}
+
+.search-field-input input:focus {
+  box-shadow: none;
+}
+
+.search-field-input input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.search-field-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--border-color);
+  flex-shrink: 0;
+}
+
+.search-btn {
+  background: var(--primary-500);
+  color: white;
+  padding: var(--sp-3) var(--sp-6);
+  border-radius: var(--radius-lg);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-base);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: none;
+  white-space: nowrap;
+}
+
+.search-btn:hover {
+  background: var(--primary-600);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+  transform: translateY(-1px);
+}
+
+/* ========== RECENT SEARCHES ========== */
+.recent-searches {
+  padding: var(--sp-8) 0;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-6);
+}
+
+.section-title {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+}
+
+.section-link {
+  font-size: var(--fs-sm);
+  color: var(--primary-500);
+  cursor: pointer;
+}
+
+.recent-cards {
+  display: flex;
+  gap: var(--sp-4);
+  overflow-x: auto;
+  padding-bottom: var(--sp-2);
+}
+
+.recent-card {
+  min-width: 220px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform var(--transition-base);
+}
+
+.recent-card:hover {
+  transform: translateY(-4px);
+}
+
+.recent-card-img {
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(135deg, var(--primary-400), var(--primary-700));
+  position: relative;
+}
+
+.recent-card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+}
+
+.recent-card-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--sp-4);
+  color: white;
+  z-index: 1;
+}
+
+.recent-card-badges {
+  display: flex;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
+  position: absolute;
+  top: var(--sp-3);
+  left: var(--sp-3);
+}
+
+.recent-card-badge {
+  font-size: var(--fs-xs);
+  padding: 2px var(--sp-2);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+}
+
+.recent-card h3 {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  margin-bottom: 2px;
+}
+
+.recent-card p {
+  font-size: var(--fs-xs);
+  opacity: 0.9;
+}
+
+.recent-card .date {
+  font-size: var(--fs-xs);
+  color: #60a5fa;
+  margin-top: var(--sp-1);
+}
+
+/* ========== AIRLINES SECTION ========== */
+.airlines-section {
+  padding: var(--sp-10) 0;
+  background: var(--bg-secondary);
+}
+
+.airlines-header {
+  margin-bottom: var(--sp-8);
+}
+
+.airlines-header h2 {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--sp-2);
+}
+
+.airlines-header p {
+  color: var(--primary-500);
+  font-size: var(--fs-sm);
+}
+
+.airlines-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-10);
+  flex-wrap: wrap;
+  padding: var(--sp-6) 0;
+}
+
+.airline-logo {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  color: var(--text-secondary);
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.airline-logo:hover {
+  opacity: 1;
+}
+
+.airline-logo img {
+  height: 32px;
+}
+
+.airline-logo-text {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: -0.02em;
+}
+
+/* ========== FEATURES SECTION ========== */
+.features-section {
+  padding: var(--sp-12) 0;
+}
+
+.features-previews {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-6);
+  margin-bottom: var(--sp-10);
+}
+
+.feature-preview {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.feature-preview:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.feature-preview-img {
+  height: 180px;
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-4);
+  overflow: hidden;
+}
+
+.feature-preview-img .mock-ui {
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: var(--radius-md);
+  padding: var(--sp-3);
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.feature-preview-body {
+  padding: var(--sp-5);
+}
+
+.feature-preview-body h3 {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--sp-2);
+}
+
+.feature-preview-body p {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--sp-3);
+}
+
+.feature-link {
+  font-size: var(--fs-sm);
+  color: var(--primary-500);
+  font-weight: var(--fw-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  cursor: pointer;
+}
+
+.feature-link:hover {
+  gap: var(--sp-2);
+}
+
+/* ========== REVIEWS SECTION ========== */
+.reviews-section {
+  padding: var(--sp-10) 0;
+  background: var(--bg-secondary);
+}
+
+.reviews-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-6);
+}
+
+.reviews-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.reviews-label {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  font-weight: var(--fw-semibold);
+}
+
+.reviews-title {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+}
+
+.reviews-score {
+  text-align: center;
+}
+
+.reviews-score .score {
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+
+.review-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  padding: var(--sp-5);
+  border: 1px solid var(--border-color);
+}
+
+.review-card .stars {
+  margin-bottom: var(--sp-3);
+}
+
+.review-card p {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--sp-4);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.review-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+}
+
+.review-author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-author-name {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.review-author-time {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+}
+
+.reviews-footer {
+  text-align: center;
+}
+
+.reviews-footer a {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+
+/* ========== SELL MILES SECTION ========== */
+.sell-miles-section {
+  padding: var(--sp-12) 0;
+}
+
+.sell-miles-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-10);
+  align-items: center;
+}
+
+.sell-miles-left {
+  padding-right: var(--sp-8);
+}
+
+.sell-miles-label {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  color: var(--primary-500);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--sp-3);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.sell-miles-left h2 {
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  margin-bottom: var(--sp-4);
+}
+
+.sell-miles-left p {
+  font-size: var(--fs-base);
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-6);
+  line-height: 1.7;
+}
+
+.sell-miles-features {
+  display: flex;
+  gap: var(--sp-6);
+  margin-bottom: var(--sp-8);
+}
+
+.sell-miles-feature {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.sell-miles-feature .check {
+  color: var(--green-500);
+}
+
+.sell-miles-right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.pix-notification {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-4) var(--sp-5);
+  transition: all var(--transition-base);
+  animation: slideInRight 0.4s ease forwards;
+}
+
+.pix-notification:nth-child(2) { animation-delay: 0.1s; }
+.pix-notification:nth-child(3) { animation-delay: 0.2s; }
+
+.pix-notification:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.pix-left {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.pix-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--green-500);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xs);
+  flex-shrink: 0;
+}
+
+.pix-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.pix-title {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.pix-time {
+  font-size: var(--fs-xs);
+  color: var(--text-tertiary);
+}
+
+.pix-amount {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  color: var(--green-600);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .features-previews,
+  .reviews-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .sell-miles-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--sp-8) 0 var(--sp-12);
+  }
+  
+  .search-form-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-field-divider {
+    width: 100%;
+    height: 1px;
+  }
+  
+  .search-field {
+    min-width: unset;
+  }
+  
+  .hero-top {
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+  
+  .features-previews,
+  .reviews-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .airlines-logos {
+    gap: var(--sp-6);
+  }
+  
+  .sell-miles-features {
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+}
