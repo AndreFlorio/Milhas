@@ -10,6 +10,8 @@ let searchParams = {};
 let allFlights = [];
 let filteredFlights = [];
 let dataSource = 'simulated';
+let verifyUrl = null;
+let searchedAt = null;
 let filters = {
   stops: 'all',
   airlines: [],
@@ -159,6 +161,8 @@ async function loadFlights() {
     });
     allFlights = result.flights;
     dataSource = result.source;
+    verifyUrl = result.verifyUrl;
+    searchedAt = result.searchedAt;
   } catch {
     allFlights = [];
     dataSource = 'simulated';
@@ -174,13 +178,17 @@ async function loadFlights() {
   if (badge) {
     if (dataSource === 'serpapi') {
       badge.className = 'data-source-badge real';
-      badge.textContent = '✓ Dados reais — Google Flights via SerpAPI (preços ao vivo)';
+      badge.innerHTML = verifyUrl
+        ? `✓ Preços reais via Google Flights · <a href="${verifyUrl}" target="_blank" rel="noopener noreferrer" class="source-link">Abrir busca original ↗</a>${searchedAt ? ` · atualizado ${formatSearchedAt(searchedAt)}` : ''}`
+        : '✓ Dados reais — Google Flights via SerpAPI';
     } else if (dataSource === 'amadeus') {
       badge.className = 'data-source-badge real';
-      badge.textContent = '✓ Dados reais — Amadeus';
+      badge.innerHTML = verifyUrl
+        ? `✓ Dados reais via Amadeus · <a href="${verifyUrl}" target="_blank" rel="noopener noreferrer" class="source-link">Verificar no Google Flights ↗</a>`
+        : '✓ Dados reais — Amadeus';
     } else {
       badge.className = 'data-source-badge simulated';
-      badge.textContent = '⚠ Dados simulados — configure SERPAPI_KEY no .env';
+      badge.innerHTML = '⚠ Dados simulados — adicione <strong>SERPAPI_KEY</strong> em Vercel → Settings → Environment Variables e faça redeploy';
     }
   }
 
@@ -321,6 +329,9 @@ function renderFlightCards() {
           <div class="flight-price-label">Por pessoa a partir de</div>
           <div class="flight-price-value">${formatCurrency(f.pricePerPerson)}</div>
           <div class="flight-price-sub">Inclui taxas e impostos</div>
+          ${f.sourceLabel ? `<div class="flight-source-label">Fonte: ${f.sourceLabel}</div>` : ''}
+          ${f.verifyUrl ? `<a href="${f.verifyUrl}" target="_blank" rel="noopener noreferrer" class="flight-verify-link" onclick="event.stopPropagation()">Verificar preço ↗</a>` : ''}
+          ${f.airlineUrl ? `<a href="${f.airlineUrl}" target="_blank" rel="noopener noreferrer" class="flight-airline-link" onclick="event.stopPropagation()">Site ${f.airlineName} ↗</a>` : ''}
           <button class="flight-select-btn" data-select="${f.id}">Selecionar</button>
         </div>
       </div>
@@ -361,6 +372,13 @@ function showBookingModal(flight) {
             <label class="form-label">Valor da reserva (R$)</label>
             <input type="number" id="res-value" value="${flight.pricePerPerson}" />
           </div>
+          ${flight.verifyUrl || flight.airlineUrl ? `
+            <div class="booking-verify-box">
+              <p><strong>Confirme o preço antes de reservar:</strong></p>
+              ${flight.verifyUrl ? `<a href="${flight.verifyUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Google Flights ↗</a>` : ''}
+              ${flight.airlineUrl ? `<a href="${flight.airlineUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Site ${flight.airlineName} ↗</a>` : ''}
+            </div>
+          ` : ''}
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" id="modal-cancel">Cancelar</button>
@@ -393,6 +411,9 @@ function showBookingModal(flight) {
       locator,
       airline: flight.airline,
       dataSource,
+      verifyUrl: flight.verifyUrl || verifyUrl,
+      sourceLabel: flight.sourceLabel || (dataSource === 'serpapi' ? 'Google Flights' : dataSource),
+      searchedAt,
       passengers: [{ name, ticketId: generateTicketNumber(name, locator) }],
       outbound: {
         origin: flight.origin,
@@ -419,4 +440,14 @@ function showBookingModal(flight) {
     close();
     router.navigate('/reserva', { id: reservation.id });
   });
+}
+
+function formatSearchedAt(iso) {
+  if (!iso) return '';
+  try {
+    const d = new Date(iso.replace(' UTC', 'Z'));
+    return d.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+  } catch {
+    return '';
+  }
 }

@@ -202,7 +202,8 @@ export function buildReservationCardHTML(reservation, options = {}) {
 
       ${model.dataSource === 'serpapi' ? `
         <div style="padding:10px 24px;background:#f0fdf4;border-top:1px solid #bbf7d0;font-size:10px;color:#16a34a;text-align:center;">
-          ✓ Voos e preços verificados via Google Flights (SerpAPI)
+          ✓ Preço verificado via Google Flights (SerpAPI)
+          ${reservation.verifyUrl ? ` · <a href="${reservation.verifyUrl}" style="color:#15803d;font-weight:600">Abrir busca ↗</a>` : ''}
         </div>
       ` : model.dataSource === 'amadeus' ? `
         <div style="padding:10px 24px;background:#f0fdf4;border-top:1px solid #bbf7d0;font-size:10px;color:#16a34a;text-align:center;">

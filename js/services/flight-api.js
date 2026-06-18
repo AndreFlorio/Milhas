@@ -1,5 +1,5 @@
 import { generateFlights } from '../data/flights.js';
-import { getAirline, normalizeAirlineCode } from '../data/airlines.js';
+import { getAirline, normalizeAirlineCode, getAirlineSite } from '../data/airlines.js';
 import { getAirport } from '../data/airports.js';
 
 /**
@@ -17,8 +17,10 @@ export async function searchFlights({ origin, destination, departDate, returnDat
 
     if (data.flights?.length > 0) {
       return {
-        flights: enrichFlights(data.flights, origin, destination),
+        flights: enrichFlights(data.flights, origin, destination, data.verifyUrl),
         source: data.source || 'serpapi',
+        verifyUrl: data.verifyUrl,
+        searchedAt: data.searchedAt,
       };
     }
   } catch {
@@ -29,10 +31,12 @@ export async function searchFlights({ origin, destination, departDate, returnDat
   return {
     flights: enrichFlights(mock, origin, destination),
     source: 'simulated',
+    verifyUrl: null,
+    searchedAt: null,
   };
 }
 
-function enrichFlights(flights, origin, destination) {
+function enrichFlights(flights, origin, destination, globalVerifyUrl) {
   const originAirport = getAirport(origin);
   const destAirport = getAirport(destination);
 
@@ -45,6 +49,8 @@ function enrichFlights(flights, origin, destination) {
       airlineName: f.airlineName || airline.name,
       originCity: getAirport(f.origin)?.city || originAirport?.city || origin,
       destinationCity: getAirport(f.destination)?.city || destAirport?.city || destination,
+      verifyUrl: f.verifyUrl || globalVerifyUrl || null,
+      airlineUrl: f.airlineUrl || getAirlineSite(code),
     };
   });
 }

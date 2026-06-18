@@ -538,6 +538,54 @@
   color: #b45309;
 }
 
+.data-source-badge .source-link {
+  color: var(--green-600);
+  font-weight: var(--fw-semibold);
+  text-decoration: underline;
+}
+
+.flight-source-label {
+  font-size: var(--fs-xs);
+  color: var(--green-600);
+  font-weight: var(--fw-medium);
+  margin-top: var(--sp-1);
+}
+
+.flight-verify-link,
+.flight-airline-link {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--primary-500);
+  font-weight: var(--fw-medium);
+  margin-top: 4px;
+  text-decoration: none;
+}
+
+.flight-verify-link:hover,
+.flight-airline-link:hover {
+  text-decoration: underline;
+}
+
+.booking-verify-box {
+  background: var(--primary-50);
+  border: 1px solid var(--primary-200);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.booking-verify-box p {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.booking-verify-box .btn {
+  align-self: flex-start;
+}
+
 /* ========== RESPONSIVE ========== */
 @media (max-width: 1024px) {
   .search-layout {

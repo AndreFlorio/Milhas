@@ -37,6 +37,11 @@ export function renderReservationDetail(params = {}) {
 
         <div class="res-detail-toolbar">
           <button class="btn btn-primary" id="pdf-btn">⬇ Salvar PDF</button>
+          ${reservation.verifyUrl ? `
+            <a href="${reservation.verifyUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+              Verificar no Google Flights ↗
+            </a>
+          ` : ''}
 
           <div class="toolbar-group">
             <span class="toolbar-label">Cor</span>

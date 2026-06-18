@@ -1,6 +1,6 @@
 /**
  * Provedores de busca de voos (SerpAPI → Amadeus → vazio)
- * Chaves ficam apenas no servidor (.env), nunca no bundle do cliente.
+ * Chaves ficam apenas no servidor (.env local ou Vercel Environment Variables).
  */
 
 let cachedAmadeusToken = null;
@@ -17,6 +17,19 @@ const AIRLINE_NAME_MAP = {
   delta: 'DL',
   'air france': 'AF',
   iberia: 'IB',
+};
+
+const AIRLINE_SITES = {
+  AD: 'https://www.voeazul.com.br',
+  LA: 'https://www.latamairlines.com/br/pt',
+  G3: 'https://www.voegol.com.br',
+  TP: 'https://www.flytap.com/pt-br',
+  AA: 'https://www.aa.com',
+  O6: 'https://www.avianca.com/br/pt',
+  UA: 'https://www.united.com',
+  DL: 'https://www.delta.com',
+  AF: 'https://www.airfrance.com.br',
+  IB: 'https://www.iberia.com/br',
 };
 
 function normalizeAirlineCode(code) {
@@ -51,7 +64,14 @@ function parseTime(datetime) {
   return { date, time: time?.slice(0, 5) || '' };
 }
 
-function mapSerpApiOffer(offer, passengers, index) {
+function buildGoogleFlightsUrl(origin, destination, departDate, returnDate) {
+  const q = returnDate
+    ? `Voos de ${origin} para ${destination} em ${departDate} retorno ${returnDate}`
+    : `Voos de ${origin} para ${destination} em ${departDate}`;
+  return `https://www.google.com/travel/flights/search?q=${encodeURIComponent(q)}&hl=pt-BR&gl=br&curr=BRL`;
+}
+
+function mapSerpApiOffer(offer, passengers, index, meta) {
   const segments = offer.flights || [];
   if (!segments.length) return null;
 
@@ -82,6 +102,10 @@ function mapSerpApiOffer(offer, passengers, index) {
     flightNumber: (first.flight_number || '').replace(/\s/g, ''),
     airlineLogo: first.airline_logo || offer.airline_logo,
     source: 'serpapi',
+    sourceLabel: 'Google Flights',
+    verifyUrl: meta.googleFlightsUrl,
+    airlineUrl: AIRLINE_SITES[airline] || null,
+    searchedAt: meta.searchedAt,
   };
 }
 
@@ -113,13 +137,17 @@ export async function searchSerpApi(params, apiKey) {
 
   const offers = [...(data.best_flights || []), ...(data.other_flights || [])];
   const passengers = params.passengers || 1;
+  const googleFlightsUrl = data.search_metadata?.google_flights_url
+    || buildGoogleFlightsUrl(params.origin, params.destination, params.departDate, params.returnDate);
+  const searchedAt = data.search_metadata?.processed_at || new Date().toISOString();
+  const meta = { googleFlightsUrl, searchedAt };
 
   const flights = offers
-    .map((offer, i) => mapSerpApiOffer(offer, passengers, i))
+    .map((offer, i) => mapSerpApiOffer(offer, passengers, i, meta))
     .filter(Boolean)
     .sort((a, b) => a.pricePerPerson - b.pricePerPerson);
 
-  return flights;
+  return { flights, verifyUrl: googleFlightsUrl, searchedAt };
 }
 
 function parseAmadeusDuration(iso) {
@@ -130,19 +158,19 @@ function parseAmadeusDuration(iso) {
   return h * 60 + m;
 }
 
-function mapAmadeusOffer(offer, origin, destination, passengers) {
+function mapAmadeusOffer(offer, origin, destination, passengers, verifyUrl) {
   const itinerary = offer.itineraries[0];
   const segments = itinerary.segments;
   const first = segments[0];
   const last = segments[segments.length - 1];
   const depDate = new Date(first.departure.at);
   const arrDate = new Date(last.arrival.at);
-  const airline = offer.validatingAirlineCodes?.[0] || first.carrierCode;
+  const airline = normalizeAirlineCode(offer.validatingAirlineCodes?.[0] || first.carrierCode);
   const price = Math.round(parseFloat(offer.price.total));
 
   return {
     id: offer.id,
-    airline: normalizeAirlineCode(airline),
+    airline,
     airlineName: airline,
     origin,
     destination,
@@ -158,6 +186,9 @@ function mapAmadeusOffer(offer, origin, destination, passengers) {
     passengers,
     flightNumber: `${first.carrierCode}${first.number}`,
     source: 'amadeus',
+    sourceLabel: 'Amadeus',
+    verifyUrl,
+    airlineUrl: AIRLINE_SITES[airline] || null,
   };
 }
 
@@ -206,9 +237,13 @@ export async function searchAmadeus(params, clientId, clientSecret) {
 
   const data = await apiRes.json();
   const passengers = params.passengers || 1;
-  return (data.data || []).map(o =>
-    mapAmadeusOffer(o, params.origin, params.destination, passengers)
+  const verifyUrl = buildGoogleFlightsUrl(params.origin, params.destination, params.departDate, params.returnDate);
+
+  const flights = (data.data || []).map(o =>
+    mapAmadeusOffer(o, params.origin, params.destination, passengers, verifyUrl)
   );
+
+  return { flights, verifyUrl, searchedAt: new Date().toISOString() };
 }
 
 export async function searchFlightsServer(params, env) {
@@ -216,30 +251,30 @@ export async function searchFlightsServer(params, env) {
 
   if (serpKey) {
     try {
-      const flights = await searchSerpApi(params, serpKey);
+      const { flights, verifyUrl, searchedAt } = await searchSerpApi(params, serpKey);
       if (flights.length > 0) {
-        return { flights, source: 'serpapi' };
+        return { flights, source: 'serpapi', verifyUrl, searchedAt };
       }
     } catch (err) {
       console.error('[SerpAPI]', err.message);
     }
   }
 
-  const clientId = env.VITE_AMADEUS_CLIENT_ID;
-  const clientSecret = env.VITE_AMADEUS_CLIENT_SECRET;
+  const clientId = env.VITE_AMADEUS_CLIENT_ID || env.AMADEUS_CLIENT_ID;
+  const clientSecret = env.VITE_AMADEUS_CLIENT_SECRET || env.AMADEUS_CLIENT_SECRET;
 
   if (clientId && clientSecret) {
     try {
-      const flights = await searchAmadeus(params, clientId, clientSecret);
+      const { flights, verifyUrl, searchedAt } = await searchAmadeus(params, clientId, clientSecret);
       if (flights.length > 0) {
-        return { flights, source: 'amadeus' };
+        return { flights, source: 'amadeus', verifyUrl, searchedAt };
       }
     } catch (err) {
       console.error('[Amadeus]', err.message);
     }
   }
 
-  return { flights: [], source: null };
+  return { flights: [], source: null, verifyUrl: null, searchedAt: null };
 }
 
 export function createFlightSearchMiddleware(env) {

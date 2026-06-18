@@ -46,3 +46,21 @@ export function getAirlineSmallLogo(code) {
   const airline = getAirline(code);
   return `<div class="res-airline-icon" style="background:${airline.color}">${airline.code}</div>`;
 }
+
+/** Sites oficiais das companhias para verificação de preços */
+export const AIRLINE_SITES = {
+  AD: 'https://www.voeazul.com.br',
+  LA: 'https://www.latamairlines.com/br/pt',
+  G3: 'https://www.voegol.com.br',
+  TP: 'https://www.flytap.com/pt-br',
+  AA: 'https://www.aa.com',
+  O6: 'https://www.avianca.com/br/pt',
+  UA: 'https://www.united.com',
+  DL: 'https://www.delta.com',
+  AF: 'https://www.airfrance.com.br',
+  IB: 'https://www.iberia.com/br',
+};
+
+export function getAirlineSite(code) {
+  return AIRLINE_SITES[normalizeAirlineCode(code)] || null;
+}
