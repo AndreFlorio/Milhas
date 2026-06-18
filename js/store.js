@@ -162,6 +162,19 @@ class Store {
     return this.getReservations().find(r => r.id === id);
   }
 
+  upsertReservation(reservation) {
+    const reservations = this.getReservations();
+    const idx = reservations.findIndex(
+      r => r.locator === reservation.locator && r.airline === reservation.airline
+    );
+    if (idx >= 0) {
+      reservations[idx] = { ...reservations[idx], ...reservation, id: reservations[idx].id };
+      localStorage.setItem(STORAGE_KEYS.RESERVATIONS, JSON.stringify(reservations));
+      return reservations[idx];
+    }
+    return this.addReservation(reservation);
+  }
+
   // === RECENT SEARCHES ===
   getRecentSearches() {
     return JSON.parse(localStorage.getItem(STORAGE_KEYS.RECENT_SEARCHES) || '[]');

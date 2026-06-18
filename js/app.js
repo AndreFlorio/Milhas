@@ -4,6 +4,7 @@ import { renderFooter } from './components/footer.js';
 import { renderHome } from './pages/home.js';
 import { renderSearch } from './pages/search.js';
 import { renderAgency } from './pages/agency.js';
+import { renderManageReservation } from './pages/manage-reservation.js';
 import { renderReservationDetail } from './pages/reservation-detail.js';
 import { renderPlaceholder } from './pages/placeholder.js';
 
@@ -16,6 +17,7 @@ router
   .on('/', () => { render(); renderHome(); })
   .on('/buscar', (params) => { render(); renderSearch(params); })
   .on('/minha-agencia', () => { render(); renderAgency(); })
+  .on('/gerenciar-reserva', () => { render(); renderManageReservation(); })
   .on('/reserva', (params) => { render(); renderReservationDetail(params); })
   .on('/vender-milhas', () => {
     render();

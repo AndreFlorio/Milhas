@@ -31,7 +31,7 @@ export function renderHeader() {
       <nav class="header-nav">
         <div class="nav-list" id="nav-list">
           ${navItems.map(item => `
-            <a class="nav-item ${currentRoute === item.path ? 'active' : ''}" 
+            <a class="nav-item ${currentRoute === item.path || (item.path === '/minha-agencia' && currentRoute === '/gerenciar-reserva') ? 'active' : ''}"
                data-path="${item.path}" id="${item.id}">
               ${item.label}
             </a>

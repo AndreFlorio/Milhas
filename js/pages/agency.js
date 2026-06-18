@@ -4,6 +4,7 @@ import { getAirline, getAirlineSmallLogo } from '../data/airlines.js';
 import { getAirport } from '../data/airports.js';
 import { formatCurrency, formatDateTime } from '../utils/formatters.js';
 import { generateReservationPDF } from '../utils/pdf-generator.js';
+import { showAddReservationModal } from '../components/add-reservation-modal.js';
 
 let activeTab = 'all';
 let searchQuery = '';
@@ -70,6 +71,7 @@ export function renderAgency() {
             <span class="search-icon">🔍</span>
             <input type="text" id="res-search-input" placeholder="Localizador, passageiro, descrição..." value="${searchQuery}" />
           </div>
+          <button class="btn btn-secondary btn-sm" id="manage-res-btn">🔍 Gerenciar reserva</button>
           <button class="btn btn-primary btn-sm" id="add-res-btn">+ Adicionar</button>
         </div>
 
@@ -202,8 +204,12 @@ function bindEvents(reservations) {
     renderAgency();
   });
 
+  document.getElementById('manage-res-btn')?.addEventListener('click', () => {
+    router.navigate('/gerenciar-reserva');
+  });
+
   document.getElementById('add-res-btn')?.addEventListener('click', () => {
-    router.navigate('/');
+    showAddReservationModal(() => renderAgency());
   });
 
   document.getElementById('res-tbody')?.addEventListener('click', e => {
