@@ -1,4 +1,5 @@
 import { lookupTapReservation } from './scrapers/tap.js';
+import { normalizeLastName } from './browser.js';
 
 const SUPPORTED = {
   TP: { name: 'TAP Air Portugal', lookup: lookupTapReservation },
@@ -16,7 +17,7 @@ export async function lookupReservation({ airline, locator, lastName }) {
     throw new Error(`Consulta automática disponível apenas para: ${Object.keys(SUPPORTED).join(', ')}. Use adição manual para outras companhias.`);
   }
 
-  const result = await provider.lookup(locator.trim(), lastName.trim());
+  const result = await provider.lookup(locator.trim(), normalizeLastName(lastName));
   return result;
 }
 

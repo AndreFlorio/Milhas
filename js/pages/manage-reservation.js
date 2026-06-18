@@ -54,6 +54,7 @@ export function renderManageReservation() {
             <div class="form-group">
               <label class="form-label">Sobrenome do passageiro</label>
               <input type="text" id="lastname-input" placeholder="EX: ROCHADONASCIMENTO" value="${form.lastName}" style="text-transform:uppercase" />
+              <small class="field-hint">Use só o sobrenome como no bilhete (sem acentos). Nome completo também funciona.</small>
             </div>
 
             <div class="form-check">

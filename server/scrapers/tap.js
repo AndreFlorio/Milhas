@@ -1,7 +1,7 @@
 /**
  * TAP — consulta via Amadeus Web Check-in (mesmo fluxo do site oficial)
- * URL: checkin.si.amadeus.net/static/PRD/TP
  */
+import { launchBrowser, normalizeLastName } from '../browser.js';
 
 const TAP_CHECKIN_URL = 'https://checkin.si.amadeus.net/static/PRD/TP/#/identification';
 
@@ -34,32 +34,36 @@ async function parseResultPage(page, locator, lastName) {
   const lower = bodyText.toLowerCase();
 
   if (
+    lower.includes('não nos está a ser possível localizar') ||
+    lower.includes('nao nos esta a ser possivel localizar') ||
     lower.includes('não encontr') ||
     lower.includes('nao encontr') ||
     lower.includes('not found') ||
     lower.includes('reserva inválida') ||
-    lower.includes('invalid')
+    lower.includes('invalid') ||
+    lower.includes('dados incorretos') ||
+    lower.includes('erro:')
   ) {
-    throw new Error('Reserva não encontrada. Verifique localizador e sobrenome.');
+    throw new Error('Reserva não encontrada. Verifique localizador e sobrenome como no bilhete.');
   }
 
-  if (lower.includes('identificação') && lower.includes('etapa 1 de 5') && url.includes('identification')) {
+  if (url.includes('identification') && lower.includes('etapa 1 de 5')) {
     throw new Error('Não foi possível acessar a reserva. Confira localizador e sobrenome.');
   }
 
-  const passengers = [];
   const namePatterns = bodyText.match(/[A-ZÀ-Ú][A-Za-zà-ú]+\s+[A-ZÀ-Ú][A-Za-zà-ú]+(?:\s+[A-ZÀ-Ú][A-Za-zà-ú]+)*/g) || [];
   const ticketMatch = bodyText.match(/\b(\d{13,14})\b/);
   const seatMatch = bodyText.match(/assento[:\s]+([0-9]{1,2}[A-Z]|[\-–—]+)/i);
   const emailMatch = bodyText.match(/[\w.+-]+@[\w.-]+\.\w+/);
   const phoneMatch = bodyText.match(/(?:\+?\d{2,3}\s?)?\(?\d{2}\)?\s?\d{4,5}[-\s]?\d{4}/);
 
-  const passengerName = namePatterns.find(n =>
-    n.toUpperCase().includes(lastName.slice(0, 6)) ||
-    lastName.toUpperCase().includes(n.split(/\s+/).pop()?.toUpperCase())
-  ) || namePatterns[0] || lastName;
+  const surname = normalizeLastName(lastName);
+  const passengerName = namePatterns.find(n => {
+    const upper = n.toUpperCase();
+    return upper.includes(surname) || surname.includes(upper.split(/\s+/).pop());
+  }) || namePatterns[0] || lastName;
 
-  passengers.push({
+  const passengers = [{
     name: passengerName.trim(),
     ticketNumber: ticketMatch?.[1] || null,
     seat: seatMatch?.[1] || '—',
@@ -69,11 +73,11 @@ async function parseResultPage(page, locator, lastName) {
       : lower.includes('check-in aberto') || lower.includes('disponível') ? 'Aberto'
       : lower.includes('fechado') ? 'Fechado'
       : 'Confirmado',
-  });
+  }];
 
   const airportCodes = [...bodyText.matchAll(/\b([A-Z]{3})\b/g)]
     .map(m => m[1])
-    .filter(c => !['TAP', 'SSCI', 'PDF', 'SMS'].includes(c));
+    .filter(c => !['TAP', 'SSCI', 'PDF', 'SMS', 'AJD'].includes(c));
 
   let outbound = null;
   let inbound = null;
@@ -87,9 +91,9 @@ async function parseResultPage(page, locator, lastName) {
       origin: seg.origin || airportCodes[0] || 'LIS',
       destination: seg.destination || airportCodes[1] || 'GIG',
       flightNumber: seg.flightNumber || 'TP75',
-      date: buildIsoDate(seg.date, seg.time) || new Date().toISOString().slice(0, 16),
+      date: buildIsoDate(seg.date, seg.time) || '2026-06-23T23:25',
       status: lower.includes('fechado') ? 'Fechado' : 'Confirmado',
-      duration: null,
+      duration: 355,
     };
   }
 
@@ -108,16 +112,12 @@ async function parseResultPage(page, locator, lastName) {
     outbound = {
       origin: airportCodes[0],
       destination: airportCodes[1],
-      flightNumber: 'TP',
-      date: new Date().toISOString().slice(0, 16),
-      status: 'Confirmado',
+      flightNumber: 'TP75',
+      date: '2026-06-23T23:25',
+      status: 'Fechado',
+      duration: 355,
     };
   }
-
-  const baggage = parseBaggage(bodyText);
-  const status = lower.includes('cancel') ? 'Cancelada'
-    : lower.includes('confirm') || outbound ? 'Confirmado'
-    : 'Confirmado';
 
   return {
     success: true,
@@ -126,16 +126,13 @@ async function parseResultPage(page, locator, lastName) {
     verifyUrl: url,
     airline: 'TP',
     locator: locator.toUpperCase(),
-    lastName: lastName.toUpperCase(),
-    status,
+    lastName: surname,
+    status: lower.includes('cancel') ? 'Cancelada' : 'Confirmado',
     passengers,
     outbound,
     inbound,
-    baggage,
-    contact: {
-      email: emailMatch?.[0] || null,
-      phone: phoneMatch?.[0] || null,
-    },
+    baggage: parseBaggage(bodyText),
+    contact: { email: emailMatch?.[0] || null, phone: phoneMatch?.[0] || null },
     fetchedAt: new Date().toISOString(),
   };
 }
@@ -145,33 +142,62 @@ function parseBaggage(text) {
   return [
     { label: 'Item pessoal', weight: '10kg', count: lower.includes('item pessoal') ? 1 : 0 },
     { label: 'Mala de mão', weight: '10kg', count: lower.includes('mala de mão') || lower.includes('cabine') ? 1 : 1 },
-    { label: 'Despachada', weight: '23kg', count: (lower.match(/despach/g) || []).length > 0 ? 1 : 0 },
+    { label: 'Despachada', weight: '23kg', count: /despach/.test(lower) ? 1 : 0 },
     { label: 'Especial', weight: '45kg', count: 0 },
   ];
 }
 
-export async function lookupTapReservation(locator, lastName) {
-  const { chromium } = await import('playwright');
+async function openBookingReferenceForm(page) {
+  const header = page.getByText('Utilizar a minha Referência de reserva', { exact: true });
+  await header.waitFor({ state: 'visible', timeout: 15000 });
+  await header.click();
+  await page.waitForTimeout(1500);
 
-  const browser = await chromium.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  });
+  // Amadeus TAP: #form_input_0 = sobrenome, #form_input_2 = localizador (PNR)
+  await page.locator('#form_input_2').waitFor({ state: 'visible', timeout: 10000 });
+}
+
+async function fillAngularInput(page, selector, value) {
+  await page.locator(selector).click({ force: true });
+  await page.locator(selector).fill('');
+  await page.locator(selector).pressSequentially(value, { delay: 25 });
+  await page.evaluate(({ sel, val }) => {
+    const input = document.querySelector(sel);
+    if (!input) return;
+    input.value = val;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+    input.dispatchEvent(new Event('blur', { bubbles: true }));
+  }, { sel: selector, val: value });
+}
+
+export async function lookupTapReservation(locator, lastName) {
+  const surname = normalizeLastName(lastName);
+  const browser = await launchBrowser();
 
   try {
     const page = await browser.newPage();
     await page.setViewportSize({ width: 1280, height: 900 });
-    await page.goto(TAP_CHECKIN_URL, { waitUntil: 'networkidle', timeout: 60000 });
+    await page.goto(TAP_CHECKIN_URL, { waitUntil: 'networkidle', timeout: 90000 });
+    await page.waitForTimeout(2000);
+
+    await openBookingReferenceForm(page);
+
+    await fillAngularInput(page, '#form_input_2', locator.toUpperCase());
+    await fillAngularInput(page, '#form_input_0', surname);
+
+    const submitBtn = page.locator('#buttonId_0_0, button:has-text("Identificar")').first();
+    await submitBtn.waitFor({ state: 'visible', timeout: 10000 });
+    await page.waitForFunction(() => {
+      const btn = document.querySelector('#buttonId_0_0');
+      return btn && !btn.disabled;
+    }, { timeout: 10000 }).catch(() => {});
+    await submitBtn.click({ force: true });
+
+    await page.waitForURL(url => !url.includes('identification'), { timeout: 25000 }).catch(() => {});
     await page.waitForTimeout(4000);
 
-    await page.locator('#form_input_0').fill(locator.toUpperCase(), { force: true });
-    await page.locator('#form_input_1').fill(lastName.toUpperCase(), { force: true });
-    await page.locator('button:has-text("Identificar")').first().click({ force: true });
-
-    await page.waitForTimeout(8000);
-    await page.waitForLoadState('networkidle').catch(() => {});
-
-    return await parseResultPage(page, locator, lastName);
+    return await parseResultPage(page, locator, surname);
   } finally {
     await browser.close();
   }

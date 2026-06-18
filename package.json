@@ -12,8 +12,10 @@
     "vite": "^8.0.12"
   },
   "dependencies": {
+    "@sparticuz/chromium": "^133.0.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
-    "playwright": "^1.61.0"
+    "playwright": "^1.61.0",
+    "playwright-core": "^1.61.0"
   }
 }
