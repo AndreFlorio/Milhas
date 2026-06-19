@@ -1,0 +1,16 @@
+{
+  "@xmlns": "http://www.opentravel.org/OTA/2003/05",
+  "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+  "@xsi:schemaLocation": "http://www.opentravel.org/OTA/2003/05 OTA_VehRetResRS.xsd",
+  "@Version": "1.002",
+  "@Target": "Production",
+  "@PrimaryLangID": "PT",
+  "@TimeStamp": "2026-06-19T02:15:59.821022437+01:00",
+  "Errors": {
+    "Error": {
+      "@Type": "1",
+      "@ShortText": "Invalid ReservationID value &#039;ZN48VF&#039;",
+      "#text": "Invalid ReservationID value &#039;ZN48VF&#039;"
+    }
+  }
+}

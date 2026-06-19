@@ -1,0 +1,700 @@
+{
+  "status": "200",
+  "errors": [],
+  "timeService": null,
+  "timeBackend": null,
+  "translate": {
+    "locations": {
+      "GIG": {
+        "code": "GIG",
+        "name": "Galeao Antonio Carlos Jobim",
+        "city": "Rio de Janeiro",
+        "country": "Brasil",
+        "countryCode": "BR"
+      },
+      "LIS": {
+        "code": "LIS",
+        "name": "Lisboa",
+        "city": "Lisboa",
+        "country": "Portugal",
+        "countryCode": "PT"
+      }
+    },
+    "airlines": {
+      "TP": {
+        "code": "TP",
+        "name": "TAP Air Portugal"
+      }
+    }
+  },
+  "discounts": null,
+  "externalReservations": null,
+  "currentPoints": null,
+  "ok": false,
+  "data": {
+    "pnr": "ZN48VF",
+    "fare": {
+      "listPaxNum": [
+        {
+          "paxNum": 1,
+          "paxType": "ADT"
+        }
+      ],
+      "tripType": "O",
+      "listOutbound": [
+        {
+          "idFlight": 1,
+          "idFlightAvail": 0,
+          "duration": 595,
+          "numberOfStops": 0,
+          "fareFamily": "BBSI",
+          "commercialFareFamily": null,
+          "fareFamilyHierarchy": null,
+          "freeBaggageForPax": {},
+          "embargo": false,
+          "cabin": "Economy",
+          "mixedCabins": false,
+          "isPrimeEconomyMixedCabin": null,
+          "isMixedCabin": null,
+          "listSegment": [
+            {
+              "idInfoSegment": 1,
+              "departureAirport": "LIS",
+              "departureTimezone": "Europe/Lisbon",
+              "arrivalAirport": "GIG",
+              "departureDate": "2026-06-23T23:25:00.000Z",
+              "arrivalDate": "2026-06-24T05:20:00.000Z",
+              "carrier": "TP",
+              "flightNumber": "75",
+              "operationCarrier": "TP",
+              "equipment": "339",
+              "duration": 595,
+              "departureHours": 117,
+              "stopTime": null,
+              "departureTerminal": "1",
+              "arrivalTerminal": "2",
+              "status": [
+                "39"
+              ],
+              "operationalDisclosure": null,
+              "cabinMeal": {},
+              "flightFlown": false,
+              "fareFamily": "BBSI",
+              "technicalStops": [],
+              "longLayover": false,
+              "airportChange": false,
+              "haul": null,
+              "baggageForPax": {},
+              "stopover": false,
+              "rbd": "U",
+              "fareBasis": null,
+              "marriageGroup": null,
+              "tatto": null,
+              "lineNumber": null,
+              "cabin": "Economy",
+              "availableEconomyXtra": false,
+              "noShow": false,
+              "isSSRecCancelled": false,
+              "commercialFareFamily": null,
+              "fareFamilyHierarchy": null,
+              "busStop": null,
+              "updated": false,
+              "updatedFareFamily": null,
+              "upgradeFixedPriceAllow": false,
+              "upgradeBenefitAllow": null,
+              "upgradedBenefit": null,
+              "onlyViewAllow": null,
+              "changeEditShow": "2",
+              "cabinPremium": false,
+              "married": false,
+              "notAvailable": false,
+              "oalSegment": false,
+              "directFlightGovAlert": false,
+              "codeshareFlight": false
+            }
+          ],
+          "totalPrice": null,
+          "totalPoints": null,
+          "listPaxPrice": null,
+          "listPaxPoints": null,
+          "airportChange": false,
+          "flightFlown": false,
+          "discountedWithPromocode": false,
+          "isEconomyXtra": false,
+          "upgradeFixedPriceAllow": false,
+          "milesUpgradeAllow": false,
+          "cashUpgradeAllow": true,
+          "seatBoostUpgradeAllow": false,
+          "fareCondition": null,
+          "firstSegment": {
+            "idInfoSegment": 1,
+            "departureAirport": "LIS",
+            "departureTimezone": "Europe/Lisbon",
+            "arrivalAirport": "GIG",
+            "departureDate": "2026-06-23T23:25:00.000Z",
+            "arrivalDate": "2026-06-24T05:20:00.000Z",
+            "carrier": "TP",
+            "flightNumber": "75",
+            "operationCarrier": "TP",
+            "equipment": "339",
+            "duration": 595,
+            "departureHours": 117,
+            "stopTime": null,
+            "departureTerminal": "1",
+            "arrivalTerminal": "2",
+            "status": [
+              "39"
+            ],
+            "operationalDisclosure": null,
+            "cabinMeal": {},
+            "flightFlown": false,
+            "fareFamily": "BBSI",
+            "technicalStops": [],
+            "longLayover": false,
+            "airportChange": false,
+            "haul": null,
+            "baggageForPax": {},
+            "stopover": false,
+            "rbd": "U",
+            "fareBasis": null,
+            "marriageGroup": null,
+            "tatto": null,
+            "lineNumber": null,
+            "cabin": "Economy",
+            "availableEconomyXtra": false,
+            "noShow": false,
+            "isSSRecCancelled": false,
+            "commercialFareFamily": null,
+            "fareFamilyHierarchy": null,
+            "busStop": null,
+            "updated": false,
+            "updatedFareFamily": null,
+            "upgradeFixedPriceAllow": false,
+            "upgradeBenefitAllow": null,
+            "upgradedBenefit": null,
+            "onlyViewAllow": null,
+            "changeEditShow": "2",
+            "cabinPremium": false,
+            "married": false,
+            "notAvailable": false,
+            "oalSegment": false,
+            "directFlightGovAlert": false,
+            "codeshareFlight": false
+          },
+          "lastSegment": {
+            "idInfoSegment": 1,
+            "departureAirport": "LIS",
+            "departureTimezone": "Europe/Lisbon",
+            "arrivalAirport": "GIG",
+            "departureDate": "2026-06-23T23:25:00.000Z",
+            "arrivalDate": "2026-06-24T05:20:00.000Z",
+            "carrier": "TP",
+            "flightNumber": "75",
+            "operationCarrier": "TP",
+            "equipment": "339",
+            "duration": 595,
+            "departureHours": 117,
+            "stopTime": null,
+            "departureTerminal": "1",
+            "arrivalTerminal": "2",
+            "status": [
+              "39"
+            ],
+            "operationalDisclosure": null,
+            "cabinMeal": {},
+            "flightFlown": false,
+            "fareFamily": "BBSI",
+            "technicalStops": [],
+            "longLayover": false,
+            "airportChange": false,
+            "haul": null,
+            "baggageForPax": {},
+            "stopover": false,
+            "rbd": "U",
+            "fareBasis": null,
+            "marriageGroup": null,
+            "tatto": null,
+            "lineNumber": null,
+            "cabin": "Economy",
+            "availableEconomyXtra": false,
+            "noShow": false,
+            "isSSRecCancelled": false,
+            "commercialFareFamily": null,
+            "fareFamilyHierarchy": null,
+            "busStop": null,
+            "updated": false,
+            "updatedFareFamily": null,
+            "upgradeFixedPriceAllow": false,
+            "upgradeBenefitAllow": null,
+            "upgradedBenefit": null,
+            "onlyViewAllow": null,
+            "changeEditShow": "2",
+            "cabinPremium": false,
+            "married": false,
+            "notAvailable": false,
+            "oalSegment": false,
+            "directFlightGovAlert": false,
+            "codeshareFlight": false
+          },
+          "economyWarning": false,
+          "economyWarningFlights": null,
+          "oalWarning": false,
+          "oalWarningFlights": [],
+          "isSSRecCancelled": false
+        }
+      ],
+      "inbound": null,
+      "cFF": null,
+      "currency": null,
+      "points": null,
+      "flightPrice": {
+        "totalPrice": {
+          "price": 426.6,
+          "basePrice": 299.65,
+          "tax": 0,
+          "currency": "BRL",
+          "minFareInPoints": 0,
+          "superSaver": false,
+          "obFee": 126.95,
+          "sliderDiscount": 0,
+          "miles": 0,
+          "ccFee": 0
+        },
+        "totalPoints": {
+          "price": 53000,
+          "basePrice": 0,
+          "tax": 0,
+          "minFareInPoints": 0,
+          "superSaver": false,
+          "obFee": 0,
+          "sliderDiscount": 0,
+          "miles": 0,
+          "ccFee": 0
+        },
+        "listPaxPrice": null,
+        "listPaxPoints": null,
+        "priceHasChanged": false
+      },
+      "endorsed": [],
+      "fareCalculation": [],
+      "lastTicketDay": null,
+      "timeToThink": false,
+      "farePoints": false,
+      "discountedWithPromocode": false,
+      "removedPromocode": false,
+      "removedVoucher": false,
+      "originalFlightPrice": null,
+      "totalPromocodeDiscount": null,
+      "pnr": null,
+      "customerLogged": false,
+      "ancillariesPrices": null,
+      "thirdPartyExtrasPrices": null,
+      "bookingTotal": null,
+      "totalDiscount": null,
+      "promocodeVouchers": null,
+      "flightCost": null,
+      "cpUniqueOfferReference": null
+    },
+    "fareBreakdown": null,
+    "fareRules": null,
+    "atcAllow": true,
+    "milesUpgradeAllow": false,
+    "onHold": null,
+    "onHoldType": null,
+    "onHoldMargin": 0,
+    "ancillariesSelected": null,
+    "ancillaryBasket": null,
+    "infoTicket": {
+      "listTicket": [
+        {
+          "idPax": 1,
+          "idAnc": 0,
+          "ticket": "0472525553621",
+          "price": {
+            "price": 299.65,
+            "basePrice": 299.65,
+            "tax": 0,
+            "currency": "BRL",
+            "minFareInPoints": 0,
+            "superSaver": false,
+            "obFee": 0,
+            "sliderDiscount": 0,
+            "miles": 0,
+            "ccFee": 0
+          },
+          "dateIssue": "2026-06-17T00:00:00+01:00",
+          "voided": false,
+          "type": "ETKT",
+          "segmentTattoos": [
+            "1"
+          ],
+          "paxTattoos": [
+            "2"
+          ],
+          "quantity": 1
+        }
+      ],
+      "listAncTicket": []
+    },
+    "insuranceFare": null,
+    "infoPax": {
+      "phone": "11998281211",
+      "prefixPhone": null,
+      "email": "KAIKIOLIVEIRADEV@GMAIL.COM",
+      "listPaxNum": [
+        {
+          "paxNum": 1,
+          "paxType": "ADT"
+        }
+      ],
+      "listPax": [
+        {
+          "idPax": 1,
+          "title": "MR",
+          "name": "ANANERY",
+          "surname": "ROCHADONASCIMENTO",
+          "typePax": "ADT",
+          "ffTattoo": null,
+          "tierLevelFF": null,
+          "sex": "Male",
+          "dateOfBirth": "06/30/1966 12:00",
+          "citizen": "",
+          "listTravelDoc": [
+            {
+              "docType": "21",
+              "docNum": "",
+              "country": "",
+              "expiryDate": "",
+              "gender": "Male",
+              "nationallity": "",
+              "birthDate": "1966-06-30",
+              "lifelong": false,
+              "name": "ANA NERY",
+              "surname": "ROCHA DO NASCIMENTO"
+            }
+          ],
+          "infToAdt": 0,
+          "imFlight": null,
+          "prm": [
+            {
+              "type": "FQTR",
+              "guideDog": false,
+              "status": "39"
+            }
+          ],
+          "email": null,
+          "phone": null,
+          "tatoo": "2",
+          "phoneCountryCode": null,
+          "phoneRegion": null,
+          "secondaryEmails": null,
+          "secondaryTelephones": null,
+          "phoneType": null,
+          "emergencyData": null,
+          "address": null,
+          "lineNumber": 1,
+          "staff": false,
+          "award": true,
+          "milesUpgrade": false,
+          "unaccompaniedMinor": false,
+          "medicalAssistance": false,
+          "cancelFlight": false,
+          "studentDocNumber": null,
+          "studentfiscalNumber": null,
+          "residentDocNumber": null,
+          "residentfiscalNumber": null,
+          "tapCorporateNumber": null,
+          "workTrip": false,
+          "travelInsurance": null,
+          "outboundReservedSeats": [],
+          "inboundReservedSeats": [],
+          "nameWithSpaces": null,
+          "surnameWithSpaces": null,
+          "milesEarned": 0,
+          "tst": 0,
+          "FFid": null,
+          "FFnum": null
+        }
+      ],
+      "emergencyData": null,
+      "phoneCountryCode": "55",
+      "phoneRegion": "BR",
+      "phoneType": "10",
+      "secondaryEmails": null,
+      "secondaryTelephones": null
+    },
+    "nannybagAllowed": false,
+    "isTTT": false,
+    "tttConfirmation": false,
+    "fee": 0,
+    "paymentMethod": null,
+    "paymentMethodLastAncillaries": null,
+    "market": "BR",
+    "pointsOfSale": null,
+    "agentId": null,
+    "creationTime": "2026-06-17T21:36:00",
+    "codeIATA": null,
+    "office": "SAOTP08AC",
+    "group": false,
+    "gdsLine": [],
+    "ssrLines": [],
+    "paymentFailData": null,
+    "refundable": false,
+    "fligthsEnableRefund": [],
+    "online": false,
+    "hppAncPending": false,
+    "userProfile": {
+      "ffLevel": null,
+      "airlineID": null,
+      "title": null,
+      "firstName": "ANANERY",
+      "middleName": null,
+      "lastName": "ROCHADONASCIMENTO",
+      "currentPoints": null,
+      "communities": [],
+      "userGroups": [],
+      "loyaltyPack": null,
+      "loyaltyPackExpireDate": null,
+      "flyTapLogin": null,
+      "upgrade": null
+    },
+    "userProfileGateUpgrade": null,
+    "externalRef": null,
+    "channel": null,
+    "communities": null,
+    "groups": null,
+    "language": "pt-br",
+    "flow": null,
+    "airline": "TP",
+    "promoCode": null,
+    "statusBook": "OK",
+    "idOperationPaymentHub": null,
+    "statusIframeAdyen": null,
+    "trn": false,
+    "selectedThirdPartyAncillaries": null,
+    "timeToThinkData": null,
+    "apisMandatory": true,
+    "ancillaries": {
+      "seat": {
+        "journey": []
+      },
+      "ancillaries": [],
+      "packs": []
+    },
+    "bundleSelectionBean": null,
+    "paymentResumen": null,
+    "infoSliderSpendBean": null,
+    "roundingPassengerPoints": null,
+    "statusBookEnd": null,
+    "errorStatusBookEndCod": null,
+    "errorStatusBookEndDesc": null,
+    "maxAttemptsPayment": 0,
+    "originalPaxNumber": 1,
+    "appgwint2": "",
+    "corporate": false,
+    "stopover": false,
+    "longLayover": false,
+    "award": false,
+    "pnrWaitingMbWayPayment": false,
+    "pnrWaitingMultibancoPayment": false,
+    "timeLimitToPay": null,
+    "isSSRec": false,
+    "isSRCM": false,
+    "unfilteredSSRCodeList": [
+      "BBSI",
+      "FARE",
+      "DOCS",
+      "CTCE",
+      "CTCM",
+      "FQTR",
+      "AWRD",
+      "KEYC"
+    ],
+    "selfServiceRecoveryDataList": [],
+    "selfIropsStatus": null,
+    "directChannel": true,
+    "redemptionCorporateFop": false,
+    "voucherDiscountBean": null,
+    "ancillariesBenefitByPaxBeanList": null,
+    "whatsInclude": {
+      "1": [
+        "SSEAT",
+        "FBAG",
+        "HANDB10"
+      ]
+    },
+    "milesEarned": null,
+    "tierLevelBenefits": null,
+    "externalReservationIds": {},
+    "unstructuredFareCalc": {},
+    "extras": [],
+    "discounts": [],
+    "trackingIdPaypal": null,
+    "awardsMarket": null,
+    "paymentStatus": "OK",
+    "fqtr": null,
+    "soPeriod": null,
+    "osis": [
+      "LANGUAGE PT-BR",
+      "MARKET BR",
+      "FARE ADULT AMOUNT WITHOUT TAXES M53000.0",
+      "FARE TOTAL AMOUNT M53000.0",
+      "OBFEE126.95",
+      "FARE  CALCULATION REFUND/CHGS RESTRICTED - LIS TP RIO0.00NU",
+      "TP CALC CONT C0.00END ROE1.00 -",
+      "MILEAGE LIS RIO53000TOTAL53000",
+      "TP CALC CONT C0.00END ROE1.00 - MILEAGE LIS RIO53000TOTAL53",
+      "TP ///000",
+      "PAYMENT SETTLED",
+      "TOKEN 0019516696//2026-6-17/ROCHADONASCIMENTO"
+    ],
+    "promotionCodes": null,
+    "catalog": null,
+    "issued": false,
+    "selectGDPR": false,
+    "inPayment": false,
+    "fakePnr": null,
+    "corporateInformation": null,
+    "originalPNRMarket": "BR",
+    "milesUpgrade": null,
+    "catalogWithMiles": true,
+    "passengerContact": {
+      "email": "KAIKIOLIVEIRADEV@GMAIL.COM",
+      "telephone": {
+        "type": null,
+        "prefix": null,
+        "number": "+5511998281211"
+      }
+    },
+    "paymentStatusEmail": "Pending",
+    "statusConfirmationPage": null,
+    "failATCModifyBooking": false,
+    "fopWaitingMessage": null,
+    "confirmationMessage": null,
+    "baggageByFlightAndPax": {
+      "journey": [
+        {
+          "flightId": "1",
+          "segmentId": "1",
+          "flightBased": false,
+          "passengers": [
+            {
+              "paxId": "1",
+              "paxTatoo": "2",
+              "ancillaryInfo": [
+                {
+                  "price": 0,
+                  "originalPrice": 0,
+                  "code": "FBAG",
+                  "quantity": 1,
+                  "chargeable": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "cartrawlerUrlHrefEmail": null,
+    "cartrawlerUrlImgEmail": null,
+    "totalTicketsSummary": {
+      "totalBaseFare": 0,
+      "totalTaxes": 299.65,
+      "totalTicketsAmount": 299.65,
+      "ticketsCurrency": "BRL",
+      "totalExtrasByCurrency": {},
+      "points": 0
+    },
+    "mybPnrBlocked": false,
+    "atc": false
+  },
+  "checkin-information": {
+    "1": {
+      "status": "PENDING",
+      "date": "2026-06-22T11:25:00.000Z"
+    }
+  },
+  "checkin-information-app": [
+    {
+      "status": "PENDING",
+      "date": "2026-06-22T11:25:00.000Z",
+      "idPax": 1,
+      "rphPax": 2,
+      "idInfoSegment": 1
+    }
+  ],
+  "fare-information": {
+    "1": {
+      "changes": "FEE",
+      "refunds": "FEE",
+      "ruleId": "686*686",
+      "mealImage": null,
+      "mealImageBySegment": null,
+      "milesPercentage": 0,
+      "miles": 0,
+      "actualMiles": 4802,
+      "milesByFlightCard": {
+        "1": {
+          "flightCardId": "1",
+          "segmentId": null,
+          "milesPercentage": 0,
+          "miles": 0,
+          "actualMiles": 4802
+        }
+      },
+      "milesByFlightCardBySegment": {
+        "1": {
+          "1": {
+            "flightCardId": "1",
+            "segmentId": "1",
+            "milesPercentage": 0,
+            "miles": 0,
+            "actualMiles": 4802
+          }
+        }
+      },
+      "milesBySegment": {
+        "1": {
+          "flightCardId": null,
+          "segmentId": "1",
+          "milesPercentage": 0,
+          "miles": 0,
+          "actualMiles": 4802
+        }
+      },
+      "ancillaries": [
+        "SSEAT",
+        "FBAG",
+        "HANDB10"
+      ],
+      "basic-ancillaries": [],
+      "changes-fee": [
+        {
+          "currency": "EUR",
+          "amount": 75
+        }
+      ],
+      "refounds-fee": [
+        {
+          "currency": "EUR",
+          "amount": 75
+        }
+      ],
+      "no-show": "NONE",
+      "no-show-fee": [],
+      "changes-description": "fareconditions.text.facawalhcha",
+      "refunds-description": "fareconditions.text.facawalhref",
+      "economy-extra-elegible": false,
+      "extra-ancillaries": [],
+      "red-and-green-elegible": false,
+      "red-and-green-ancillaries": [],
+      "ancillariesBySegment": {
+        "1": []
+      }
+    }
+  },
+  "miles-information": null,
+  "ancillaries-data": null,
+  "tier-information": {},
+  "translations-app": null
+}
