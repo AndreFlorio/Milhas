@@ -128,6 +128,8 @@
   color: var(--text-tertiary);
   margin-top: var(--sp-1);
 }
+
+.manage-res-note {
   font-size: var(--fs-xs);
   color: var(--text-tertiary);
   margin-top: var(--sp-4);
